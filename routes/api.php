@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\AppointmentController;
 
 // Register and login routes for Users without authentication middleware
 Route::post('/register', [UserController::class, 'register']);
@@ -31,3 +32,16 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 });
 Route::get('services', [ServiceController::class, 'index']); // Get all services
 Route::get('services/{id}', [ServiceController::class, 'show']); // Show service
+
+// Appointment create and update with sanctum middleware
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('appointments', [AppointmentController::class, 'index']);
+    Route::post('appointments', [AppointmentController::class, 'store']);
+    Route::get('appointments/{id}', [AppointmentController::class, 'show']);
+    Route::put('appointments/{id}', [AppointmentController::class, 'update']);
+});
+
+// Appointment delete 
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::delete('appointments/{id}', [AppointmentController::class, 'destroy']);
+});

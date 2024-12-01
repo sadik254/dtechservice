@@ -24,9 +24,14 @@ class UserController extends Controller
         }
 
         // Create and return a token
-        $token = $user->createToken('YourAppName')->plainTextToken;
+        // $token = $user->createToken('YourAppName')->plainTextToken;
+         // Create the token
+        $plainTextToken = $user->createToken('YourAppName')->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        // Extract the token part after the '|'
+        $token = explode('|', $plainTextToken)[1];
+
+        return response()->json(['token' => $token, 'user_id' => $user->id,]);
     }
 
     // Registration method
@@ -46,9 +51,13 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $token = $user->createToken('YourAppName')->plainTextToken;
+        // $token = $user->createToken('YourAppName')->plainTextToken;
+        $plainTextToken = $user->createToken('YourAppName')->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        // Extract the token part after the '|'
+        $token = explode('|', $plainTextToken)[1];
+
+        return response()->json(['token' => $token, 'user_id' => $user->id,]);
     }
 
     public function update(Request $request)

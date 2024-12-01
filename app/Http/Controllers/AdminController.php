@@ -31,11 +31,13 @@ class AdminController extends Controller
         ]);
 
         // Generate API token
-        $token = $admin->createToken('AdminToken', ['admin'])->plainTextToken;
+        $plainTextToken = $admin->createToken('AdminToken', ['admin'])->plainTextToken;
+        $token = explode('|', $plainTextToken)[1];
 
         return response()->json([
             'message' => 'Admin registered successfully',
             'token' => $token,
+            'admin_id' => $admin->id,
         ], 201);
     }
 
@@ -59,11 +61,13 @@ class AdminController extends Controller
         }
 
         // Generate API token
-        $token = $admin->createToken('AdminToken', ['admin'])->plainTextToken;
+        $plainTextToken = $admin->createToken('AdminToken', ['admin'])->plainTextToken;
+        $token = explode('|', $plainTextToken)[1];
 
         return response()->json([
             'message' => 'Login successful',
             'token' => $token,
+            'admin_id' => $admin->id,
         ]);
     }
 

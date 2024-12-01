@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Service;
+use App\Models\Admin;
 
 class Appointment extends Model
 {
@@ -31,7 +34,7 @@ class Appointment extends Model
      */
     public function user()
     {
-        return $this->belongsTo(App\Models\User, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -40,7 +43,7 @@ class Appointment extends Model
      */
     public function service()
     {
-        return $this->belongsTo(App\Models\Service, 'service_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
     /**
@@ -49,6 +52,6 @@ class Appointment extends Model
      */
     public function admin()
     {
-        return $this->belongsTo(App\Models\Admin, 'admin_id');
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 }

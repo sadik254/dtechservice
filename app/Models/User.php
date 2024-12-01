@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Appointment;
+use App\Models\Chat;
 
 class User extends Model
 {
@@ -20,11 +22,11 @@ class User extends Model
 
     public function appointments()
     {
-        return $this->hasMany(App\Models\Appointment, 'user_id');
+        return $this->hasMany(Appointment::class, 'user_id');
     }
 
     public function chats()
     {
-        return $this->hasMany(App\Models\Chat, 'sender_id');
+        return $this->hasMany(Chat::class, 'sender_id');
     }
 }
