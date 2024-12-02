@@ -85,4 +85,27 @@ class AppointmentController extends Controller
 
         return response()->json(['message' => 'Appointment deleted successfully.']);
     }
+
+    /**
+     * Display appointments created by the authenticated user.
+     */
+    public function userAppointments(Request $request)
+    {
+        // Get the authenticated user from the Sanctum token
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized.'], 401);
+        }
+
+        // Fetch appointments for the authenticated user
+        $appointments = Appointment::with(['service', 'admin'])
+            ->where('user_id', $user->id)
+            ->orderBy('appointment_date', 'desc')
+            ->paginate(10);
+
+        // Return the appointments as a JSON response
+        return response()->json($appointments);
+    }
+
 }

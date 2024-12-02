@@ -35,13 +35,14 @@ Route::get('services/{id}', [ServiceController::class, 'show']); // Show service
 
 // Appointment create and update with sanctum middleware
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('appointments', [AppointmentController::class, 'index']);
     Route::post('appointments', [AppointmentController::class, 'store']);
     Route::get('appointments/{id}', [AppointmentController::class, 'show']);
     Route::put('appointments/{id}', [AppointmentController::class, 'update']);
+    Route::get('/user/appointments', [AppointmentController::class, 'userAppointments']);
 });
 
 // Appointment delete 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('appointments', [AppointmentController::class, 'index']);
     Route::delete('appointments/{id}', [AppointmentController::class, 'destroy']);
 });
